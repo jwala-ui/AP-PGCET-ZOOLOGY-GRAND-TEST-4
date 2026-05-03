@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PGCET Zoology Grand Test 4 | CSIR NET Level | Refined Matching</title>
+  <style>
+    :root {
+      --primary:#17324d;
+      --accent:#0f766e;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:#d8e0ea;
+      --green:#d9f7df;
+      --green-border:#37a65a;
+      --red:#ffe1e1;
+      --red-border:#d83a3a;
+      --amber:#fff3cd;
+      --blue:#dbeafe;
+      --purple:#ede9fe;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .topbar {
+      background: linear-gradient(135deg, #0f172a, #17324d);
+      color:white;
+      padding: 18px 22px;
+      position: sticky;
+      top:0;
+      z-index: 10;
+      box-shadow: 0 4px 14px rgba(0,0,0,.18);
+    }
+    .topbar h1 {
+      margin:0;
+      font-size: 22px;
+      letter-spacing:.2px;
+    }
+    .sub {
+      margin-top:5px;
+      font-size: 13px;
+      opacity:.88;
+    }
+    .exam-meta {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .pill {
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:20px;
+      padding:6px 10px;
+      font-size:13px;
+    }
+    .layout {
+      display:grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap:18px;
+      padding:18px;
+      max-width: 1280px;
+      margin:0 auto;
+    }
+    .card {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:0 8px 24px rgba(30,41,59,.08);
+    }
+    .question-card {
+      padding:22px;
+      min-height: 560px;
+    }
+    .qhead {
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      border-bottom:1px solid var(--border);
+      padding-bottom:14px;
+      margin-bottom:18px;
+    }
+    .qno {
+      font-weight:700;
+      font-size:18px;
+      color:var(--primary);
+    }
+    .badge {
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:999px;
+      font-size:12px;
+      background:#eef2ff;
+      color:#3730a3;
+      border:1px solid #c7d2fe;
+      margin-top:6px;
+    }
+    .topic {
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:999px;
+      font-size:12px;
+      background:#ecfeff;
+      color:#155e75;
+      border:1px solid #a5f3fc;
+      margin-top:6px;
+      margin-left:6px;
+    }
+    .marks {
+      color:var(--muted);
+      font-size:13px;
+      text-align:right;
+    }
+    .stem {
+      font-size:17px;
+      line-height:1.62;
+      white-space:pre-line;
+      margin-bottom:18px;
+      font-weight:500;
+    }
+
+    .match-table {
+      width:100%;
+      border-collapse:collapse;
+      margin:12px 0 8px;
+      background:#ffffff;
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+      white-space:normal;
+    }
+    .match-table th {
+      background:#eaf2fb;
+      color:#17324d;
+      text-align:left;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      font-size:15px;
+    }
+    .match-table td {
+      padding:10px 12px;
+      border:1px solid var(--border);
+      vertical-align:top;
+      font-size:15px;
+      line-height:1.45;
+    }
+    .review-card .match-table {
+      background:rgba(255,255,255,.78);
+    }
+
+    .options {
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+    .option {
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:13px 14px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      cursor:pointer;
+      background:white;
+      transition:.15s ease;
+      line-height:1.45;
+    }
+    .option:hover {
+      border-color:#94a3b8;
+      background:#f8fafc;
+    }
+    .option.selected {
+      background:var(--blue);
+      border-color:#2563eb;
+    }
+    .num {
+      min-width:28px;
+      height:28px;
+      border-radius:50%;
+      border:1px solid #9ca3af;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:13px;
+      background:white;
+    }
+    .option.selected .num {
+      background:#2563eb;
+      color:white;
+      border-color:#2563eb;
+    }
+    .controls {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:24px;
+      border-top:1px solid var(--border);
+      padding-top:16px;
+    }
+    button {
+      border:0;
+      border-radius:12px;
+      padding:11px 15px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:14px;
+    }
+    .btn-primary { background:#17324d; color:white; }
+    .btn-secondary { background:#e5e7eb; color:#111827; }
+    .btn-review { background:#7c3aed; color:white; }
+    .btn-clear { background:#fee2e2; color:#991b1b; }
+    .btn-submit { background:#16a34a; color:white; }
+    .side {
+      padding:16px;
+      position: sticky;
+      top: 116px;
+      height: calc(100vh - 136px);
+      overflow:auto;
+    }
+    .timer {
+      font-size:28px;
+      font-weight:800;
+      color:#b91c1c;
+      background:#fff1f2;
+      border:1px solid #fecdd3;
+      padding:12px;
+      border-radius:14px;
+      text-align:center;
+      margin-bottom:12px;
+    }
+    .legend {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      font-size:12px;
+      margin:12px 0 14px;
+      color:#374151;
+    }
+    .legend span {
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .dot {
+      width:13px;height:13px;border-radius:50%;
+      display:inline-block;
+      border:1px solid #94a3b8;
+    }
+    .dot.notvisited { background:#f3f4f6; }
+    .dot.answered { background:#22c55e; }
+    .dot.review { background:#8b5cf6; }
+    .dot.current { background:#2563eb; }
+    .palette {
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:8px;
+    }
+    .pbtn {
+      height:38px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:#f3f4f6;
+      color:#111827;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .pbtn.answered { background:#dcfce7; border-color:#22c55e; }
+    .pbtn.review { background:#ede9fe; border-color:#8b5cf6; }
+    .pbtn.current { background:#dbeafe; border-color:#2563eb; outline:2px solid #2563eb55; }
+    .summarybox {
+      margin-top:14px;
+      border-top:1px solid var(--border);
+      padding-top:12px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+    #resultView {
+      display:none;
+      padding:18px;
+      max-width:1180px;
+      margin:0 auto 40px;
+    }
+    .result-grid {
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:14px;
+      margin-bottom:18px;
+    }
+    .stat {
+      padding:18px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:white;
+      text-align:center;
+      box-shadow:0 8px 24px rgba(30,41,59,.06);
+    }
+    .stat .big { font-size:30px; font-weight:800; color:var(--primary); }
+    .stat .label { font-size:13px; color:var(--muted); margin-top:5px; }
+    .review-card {
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      margin-bottom:14px;
+      background:white;
+    }
+    .review-card.correct {
+      background:var(--green);
+      border-color:var(--green-border);
+    }
+    .review-card.wrong {
+      background:var(--red);
+      border-color:var(--red-border);
+    }
+    .review-card.unattempted {
+      background:#fffaf0;
+      border-color:#f59e0b;
+    }
+    .review-stem {
+      white-space:pre-line;
+      font-weight:700;
+      line-height:1.55;
+      margin:8px 0 12px;
+    }
+    .review-option {
+      padding:9px 10px;
+      border-radius:10px;
+      margin:7px 0;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(148,163,184,.6);
+      line-height:1.45;
+    }
+    .review-option.correct-answer {
+      background:#bbf7d0;
+      border-color:#22c55e;
+      font-weight:700;
+    }
+    .review-option.wrong-answer {
+      background:#fecaca;
+      border-color:#ef4444;
+      font-weight:700;
+    }
+    .explanation {
+      margin-top:10px;
+      padding:11px 12px;
+      border-radius:12px;
+      background:#f8fafc;
+      border:1px solid #cbd5e1;
+      line-height:1.55;
+    }
+    .filters {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:16px 0;
+    }
+    .filter {
+      background:#e5e7eb;
+      color:#111827;
+    }
+    .filter.active {
+      background:#17324d;
+      color:white;
+    }
+    .start-screen {
+      max-width:900px;
+      margin:22px auto;
+      padding:24px;
+    }
+    .start-screen h2 {
+      color:var(--primary);
+      margin-top:0;
+    }
+    .instructions {
+      line-height:1.75;
+      color:#374151;
+    }
+    .hidden { display:none !important; }
+    @media(max-width:900px) {
+      .layout { grid-template-columns:1fr; padding:10px; }
+      .side { position:static; height:auto; }
+      .palette { grid-template-columns: repeat(10, 1fr); }
+      .result-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media(max-width:560px) {
+      .palette { grid-template-columns: repeat(5, 1fr); }
+      .result-grid { grid-template-columns:1fr; }
+      .topbar h1 { font-size:18px; }
+      .stem { font-size:16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <h1>PGCET ZOOLOGY GRAND TEST 4</h1>
+    <div class="sub">CSIR NET Level | AP PGCET 2026 Zoology Syllabus Based | 100 Questions | 90 Minutes</div>
+    <div class="exam-meta">
+      <span class="pill">70 MCQs</span>
+      <span class="pill">10 Statement Type</span>
+      <span class="pill">10 Matching Type</span>
+      <span class="pill">10 Assertion & Reason</span>
+      <span class="pill">Balanced answers: 25 each for options 1, 2, 3, 4</span>
+    </div>
+  </div>
+
+  <div id="startScreen" class="start-screen card">
+    <h2>Instructions</h2>
+    <div class="instructions">
+      <p><b>Duration:</b> 90 minutes.</p>
+      <p><b>Total Questions:</b> 100. Each question has four options. Choose only one answer.</p>
+      <p>Use <b>Save & Next</b> to save your response. Use <b>Mark for Review</b> if you want to revisit a question.</p>
+      <p>After submission, your result will show correct, wrong and unattempted questions. Correct answers appear in light green and wrong responses appear in red.</p>
+      <p>This test is designed at a higher reasoning level with application-based questions from invertebrates, chordates, cytology, genetics, evolution, embryology, physiology, ecology, animal behaviour, biotechnology, animal husbandry and immunology.</p>
+    </div>
+    <button class="btn-submit" onclick="startExam()">Start Test</button>
+  </div>
+
+  <div id="examLayout" class="layout hidden">
+    <main class="card question-card">
+      <div class="qhead">
+        <div>
+          <div class="qno" id="qno"></div>
+          <span class="badge" id="qtype"></span>
+          <span class="topic" id="topic"></span>
+        </div>
+        <div class="marks">Single Correct Answer<br/>+1 for correct, 0 for wrong</div>
+      </div>
+      <div class="stem" id="stem"></div>
+      <div class="options" id="options"></div>
+      <div class="controls">
+        <button class="btn-secondary" onclick="prevQuestion()">Previous</button>
+        <button class="btn-primary" onclick="saveNext()">Save & Next</button>
+        <button class="btn-review" onclick="markReview()">Mark for Review</button>
+        <button class="btn-clear" onclick="clearResponse()">Clear Response</button>
+        <button class="btn-submit" onclick="confirmSubmit()">Submit Test</button>
+      </div>
+    </main>
+
+    <aside class="card side">
+      <div class="timer" id="timer">90:00</div>
+      <div class="legend">
+        <span><i class="dot notvisited"></i> Not visited</span>
+        <span><i class="dot answered"></i> Answered</span>
+        <span><i class="dot review"></i> Review</span>
+        <span><i class="dot current"></i> Current</span>
+      </div>
+      <div class="palette" id="palette"></div>
+      <div class="summarybox" id="liveSummary"></div>
+    </aside>
+  </div>
+
+  <section id="resultView">
+    <div class="card" style="padding:20px;margin-bottom:16px;">
+      <h2 style="margin:0 0 8px;color:var(--primary);">Result Summary</h2>
+      <div id="resultNote" style="color:var(--muted);line-height:1.6;"></div>
+    </div>
+    <div class="result-grid">
+      <div class="stat"><div class="big" id="scoreStat">0</div><div class="label">Score / 100</div></div>
+      <div class="stat"><div class="big" id="correctStat">0</div><div class="label">Correct</div></div>
+      <div class="stat"><div class="big" id="wrongStat">0</div><div class="label">Wrong</div></div>
+      <div class="stat"><div class="big" id="unattemptedStat">0</div><div class="label">Unattempted</div></div>
+    </div>
+    <div class="filters">
+      <button class="filter active" onclick="renderReview('all', this)">All</button>
+      <button class="filter" onclick="renderReview('correct', this)">Correct</button>
+      <button class="filter" onclick="renderReview('wrong', this)">Wrong</button>
+      <button class="filter" onclick="renderReview('unattempted', this)">Unattempted</button>
+    </div>
+    <div id="reviewContainer"></div>
+  </section>
+
+<script>
+const QUESTIONS = [{"id": 1, "type": "MCQ", "topic": "Invertebrate Zoology", "stem": "In Elphidium, the reticulopodial network is more significant than ordinary lobopodia because it primarily helps in:", "options": ["Rapid swimming in open water", "Attachment to host intestine", "Formation of a chitinous exoskeleton", "Cytoplasmic streaming, food capture and slow locomotion"], "answer": 4, "explanation": "Elphidium is a foraminiferan protozoan. Its reticulopodia form a branching network useful in food capture, cytoplasmic streaming and slow movement."}, {"id": 2, "type": "MCQ", "topic": "Porifera", "stem": "Which of the following is NOT a function of the canal system in sponges?", "options": ["Bringing suspended food particles", "Closed blood circulation", "Facilitating gaseous exchange", "Removal of soluble wastes"], "answer": 2, "explanation": "Sponges lack a closed blood vascular system. Their canal system circulates water for feeding, respiration and excretion."}, {"id": 3, "type": "MCQ", "topic": "Cnidaria", "stem": "The ecological success of reef-building corals in nutrient-poor tropical seas is mainly supported by:", "options": ["A complete digestive tract with anus", "Metameric segmentation", "Symbiosis with photosynthetic zooxanthellae", "Malpighian tubules"], "answer": 3, "explanation": "Coral polyps live with zooxanthellae, which provide photosynthates and assist in calcium carbonate deposition."}, {"id": 4, "type": "Assertion & Reason", "topic": "Cnidaria", "stem": "Assertion (A): Polymorphism is highly developed in many colonial coelenterates.\nReason (R): Different zooids may become structurally and functionally specialized for feeding, defence or reproduction.", "options": ["A is true, R is true, but R is not the correct explanation of A", "A is true but R is false", "A is false but R is true", "A is true, R is true and R is the correct explanation of A"], "answer": 4, "explanation": "Polymorphism means occurrence of different forms within the same colony. Functional specialization of zooids explains this condition."}, {"id": 5, "type": "MCQ", "topic": "Platyhelminthes", "stem": "In the life cycle of Fasciola hepatica, the molluscan intermediate host is essential mainly for:", "options": ["Fertilization of adult flukes", "Formation of adult liver fluke", "Asexual multiplication of larval stages", "Production of shelled eggs in bile duct"], "answer": 3, "explanation": "Snail acts as the intermediate host where sporocyst, redia and cercarial multiplication occur."}, {"id": 6, "type": "Matching", "topic": "Animal Diversity", "stem": "Match the following phyla with their characteristic structures.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Porifera</td><td>I. Radula</td></tr><tr><td>B. Mollusca</td><td>II. Flame cells</td></tr><tr><td>C. Platyhelminthes</td><td>III. Choanocytes</td></tr><tr><td>D. Echinodermata</td><td>IV. Water vascular system</td></tr></table><br>Choose the correct match.", "options": ["A-II, B-I, C-III, D-IV", "A-III, B-I, C-II, D-IV", "A-I, B-III, C-II, D-IV", "A-III, B-II, C-IV, D-I"], "answer": 2, "explanation": "Choanocytes are sponge collar cells; radula is molluscan; flame cells occur in flatworms; water vascular system is echinodermal."}, {"id": 7, "type": "MCQ", "topic": "Nematoda", "stem": "A pseudocoelom differs from a true coelom because it is:", "options": ["Filled with haemolymph only", "Not completely lined by mesoderm", "Present only in vertebrates", "Formed by invagination of ectoderm"], "answer": 2, "explanation": "A pseudocoelom is a body cavity not fully lined by mesoderm on both sides."}, {"id": 8, "type": "MCQ", "topic": "Annelida", "stem": "Metamerism in annelids becomes evolutionarily important because it allows:", "options": ["Regional specialization and efficient locomotion", "Loss of bilateral symmetry", "Absence of organ-system level organisation", "Replacement of nephridia by Malpighian tubules"], "answer": 1, "explanation": "Segmentation allows repeated organ systems, better locomotion and regional specialization."}, {"id": 9, "type": "Statement", "topic": "Vermiculture", "stem": "Study the following statements about vermiculture.\nI. Earthworms fragment organic matter and enhance microbial decomposition.\nII. Vermicompost improves soil aeration and nutrient availability.\nIII. Vermiculture can reduce biodegradable solid waste load.\nIV. Vermicompost is produced by sterilizing soil with synthetic insecticides.\nIdentify the correct statements.", "options": ["I, II and III only", "I and IV only", "II and IV only", "I, II, III and IV"], "answer": 1, "explanation": "Vermiculture is a biological process using earthworms; it does not depend on synthetic insecticide sterilization."}, {"id": 10, "type": "MCQ", "topic": "Arthropoda", "stem": "In Macrobrachium rosenbergii, the crustacean nature is supported by the presence of:", "options": ["Jointed appendages, chitinous exoskeleton and gills", "Radula and mantle cavity", "Water vascular system", "Flame cells and scolex"], "answer": 1, "explanation": "Macrobrachium is a crustacean arthropod with jointed appendages, chitinous exoskeleton and branchial respiration."}, {"id": 11, "type": "Assertion & Reason", "topic": "Arthropoda", "stem": "Assertion (A): Arthropods show extraordinary adaptive radiation.\nReason (R): The chitinous exoskeleton, jointed appendages and efficient sensory organs increase survival in diverse habitats.", "options": ["A is true but R is false", "A is false but R is true", "A is true, R is true and R is the correct explanation of A", "A is true, R is true, but R is not the correct explanation of A"], "answer": 3, "explanation": "Arthropod success is strongly linked with exoskeleton, appendage specialization and well-developed sensory systems."}, {"id": 12, "type": "MCQ", "topic": "Mollusca", "stem": "Torsion in gastropods is best described as:", "options": ["Formation of nacre around a foreign particle", "Formation of segmented parapodia", "Rotation of the visceral mass and mantle cavity by about 180 degrees", "Development of tube feet from radial canals"], "answer": 3, "explanation": "Gastropod torsion brings mantle cavity and anus towards the anterior region."}, {"id": 13, "type": "Matching", "topic": "Larval Forms", "stem": "Match the larval forms with their groups.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Glochidium</td><td>I. Hemichordata</td></tr><tr><td>B. Tornaria</td><td>II. Crustacea</td></tr><tr><td>C. Nauplius</td><td>III. Echinodermata</td></tr><tr><td>D. Bipinnaria</td><td>IV. Mollusca</td></tr></table><br>Choose the correct match.", "options": ["A-II, B-I, C-IV, D-III", "A-IV, B-I, C-II, D-III", "A-III, B-IV, C-II, D-I", "A-IV, B-III, C-II, D-I"], "answer": 2, "explanation": "Glochidium is bivalve molluscan larva; Tornaria is hemichordate; Nauplius is crustacean; Bipinnaria is echinoderm larva."}, {"id": 14, "type": "MCQ", "topic": "Echinodermata", "stem": "The madreporite in starfish is functionally connected with:", "options": ["Food grinding in stomach", "Excretion through nephridia", "Water entry into the water vascular system", "Formation of pearl-like bodies"], "answer": 3, "explanation": "Madreporite is the sieve plate through which water enters the water vascular system."}, {"id": 15, "type": "MCQ", "topic": "Hemichordata", "stem": "Balanoglossus is often discussed in relation to chordates because it possesses:", "options": ["Malpighian tubules and jointed legs", "Radula and mantle cavity", "Pharyngeal gill slits and a dorsal tubular nerve cord-like arrangement", "True vertebral column throughout life"], "answer": 3, "explanation": "Hemichordates show pharyngeal gill slits and other features that suggest affinity with chordates, though they are not true chordates."}, {"id": 16, "type": "Statement", "topic": "Protochordata", "stem": "Study the following statements about Herdmania.\nI. The larva possesses chordate characters such as notochord and dorsal nerve cord.\nII. During metamorphosis, several larval chordate characters are lost.\nIII. The adult is more actively free-swimming than the larva.\nIV. This is an example of retrogressive metamorphosis.\nIdentify the correct statements.", "options": ["I and III only", "II and III only", "I, II and IV only", "I, II, III and IV"], "answer": 3, "explanation": "Herdmania larva is free-swimming with chordate features; the sessile adult loses many of them, showing retrogressive metamorphosis."}, {"id": 17, "type": "MCQ", "topic": "Protochordata", "stem": "Amphioxus is a key model for basic chordate organization because it retains:", "options": ["Amniotic egg and mammary glands", "Notochord, dorsal hollow nerve cord and pharyngeal gill slits throughout life", "Jaws and paired limbs", "Four-chambered heart and diaphragm"], "answer": 2, "explanation": "Amphioxus shows fundamental chordate characters in a simple, persistent form."}, {"id": 18, "type": "Matching", "topic": "Chordata", "stem": "Match the following organisms with their correct identity.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Petromyzon</td><td>I. Lancelet</td></tr><tr><td>B. Myxine</td><td>II. Tunicate</td></tr><tr><td>C. Herdmania</td><td>III. Hagfish</td></tr><tr><td>D. Amphioxus</td><td>IV. Lamprey</td></tr></table><br>Choose the correct match.", "options": ["A-IV, B-III, C-II, D-I", "A-IV, B-II, C-III, D-I", "A-I, B-III, C-II, D-IV", "A-II, B-IV, C-I, D-III"], "answer": 1, "explanation": "Petromyzon is lamprey, Myxine is hagfish, Herdmania is tunicate and Amphioxus is lancelet."}, {"id": 19, "type": "Assertion & Reason", "topic": "Cyclostomata", "stem": "Assertion (A): Petromyzon is more suitable than Myxine for illustrating a suctorial ectoparasitic mode.\nReason (R): Petromyzon bears a suctorial buccal funnel with horny teeth.", "options": ["A is true, R is true and R is the correct explanation of A", "A is true but R is false", "A is false but R is true", "A is true, R is true, but R is not the correct explanation of A"], "answer": 1, "explanation": "Lampreys have a suctorial buccal funnel and are commonly ectoparasitic on fishes."}, {"id": 20, "type": "MCQ", "topic": "Pisces", "stem": "Placoid scales are considered structurally related to vertebrate teeth because both contain:", "options": ["Feathers and keratin", "Chitin and spongin", "Nacre and conchiolin", "Enamel-like and dentine-like components"], "answer": 4, "explanation": "Placoid scales have enamel-like and dentine-like material and are characteristic of cartilaginous fishes."}, {"id": 21, "type": "Matching", "topic": "Pisces", "stem": "Match the fish-related terms with the correct description.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Dipnoi</td><td>I. Breeding movement</td></tr><tr><td>B. Migration</td><td>II. Lung fishes</td></tr><tr><td>C. Placoid scale</td><td>III. Shark scale</td></tr><tr><td>D. Operculum</td><td>IV. Bony gill cover</td></tr></table><br>Choose the correct match.", "options": ["A-IV, B-I, C-II, D-III", "A-II, B-III, C-I, D-IV", "A-II, B-I, C-III, D-IV", "A-I, B-IV, C-III, D-II"], "answer": 3, "explanation": "Dipnoi are lung fishes, migration may be breeding movement, placoid scale is typical of sharks and operculum covers gills in bony fishes."}, {"id": 22, "type": "MCQ", "topic": "Amphibia", "stem": "In adult Rana, cutaneous respiration remains efficient because the skin is:", "options": ["Thin, moist and richly vascularized", "Dry, keratinized and impermeable", "Covered by scales", "Supplied with tracheae"], "answer": 1, "explanation": "Frog skin is moist and vascular, allowing gaseous exchange."}, {"id": 23, "type": "MCQ", "topic": "Reptilia", "stem": "Temporal fossae in reptilian skulls are useful in classification because they indicate:", "options": ["Number of mammary glands", "Type of larval metamorphosis", "Patterns of skull openings behind the orbit", "Presence of tube feet"], "answer": 3, "explanation": "Reptiles are classified partly on temporal openings such as anapsid, synapsid and diapsid conditions."}, {"id": 24, "type": "Statement", "topic": "Aves", "stem": "Study the following statements about flight adaptations in birds.\nI. Forelimbs are modified into wings.\nII. Pneumatic bones reduce body weight.\nIII. Air sacs support efficient ventilation.\nIV. Birds possess a two-chambered heart.\nIdentify the correct statements.", "options": ["I, II and III only", "I and IV only", "II and IV only", "I, II, III and IV"], "answer": 1, "explanation": "Birds have wings, pneumatic bones, air sacs and a four-chambered heart."}, {"id": 25, "type": "MCQ", "topic": "Aves", "stem": "Archaeopteryx is treated as a connecting link mainly because it combines:", "options": ["Fish and amphibian characters", "Reptilian and avian characters", "Mammalian and avian characters", "Protozoan and metazoan characters"], "answer": 2, "explanation": "Archaeopteryx possessed reptilian traits such as teeth and long bony tail along with avian feathers and wings."}, {"id": 26, "type": "MCQ", "topic": "Mammalia", "stem": "Thecodont dentition means that teeth are:", "options": ["Repeatedly replaced throughout life", "Embedded in sockets of jaw bones", "Fused with jaw surface", "All of the same type"], "answer": 2, "explanation": "In thecodont dentition, teeth are set in sockets."}, {"id": 27, "type": "MCQ", "topic": "Zoogeography", "stem": "The Oriental zoogeographical region is characterized by:", "options": ["Polar fauna dominated by penguins only", "Exclusive marsupial radiation as in Australia", "Absence of primates and large carnivores", "Indian subcontinent and Southeast Asian tropical fauna"], "answer": 4, "explanation": "The Oriental region includes India and Southeast Asia with rich tropical biodiversity."}, {"id": 28, "type": "Matching", "topic": "Cytology", "stem": "Match the organelle with the most appropriate function.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Rough ER</td><td>I. ATP production</td></tr><tr><td>B. Mitochondria</td><td>II. Protein synthesis and transport</td></tr><tr><td>C. Golgi complex</td><td>III. Intracellular digestion</td></tr><tr><td>D. Lysosome</td><td>IV. Packaging and secretion</td></tr></table><br>Choose the correct match.", "options": ["A-II, B-IV, C-I, D-III", "A-III, B-I, C-IV, D-II", "A-II, B-I, C-IV, D-III", "A-IV, B-II, C-III, D-I"], "answer": 3, "explanation": "RER handles proteins, mitochondria produce ATP, Golgi modifies/packages and lysosomes digest."}, {"id": 29, "type": "MCQ", "topic": "Microbiology", "stem": "The smallest self-replicating prokaryote-like organism lacking a cell wall is:", "options": ["Viroid", "Bacteriophage", "Prion", "Mycoplasma"], "answer": 4, "explanation": "Mycoplasma lacks a cell wall and is among the smallest self-replicating cellular organisms."}, {"id": 30, "type": "MCQ", "topic": "Cell Membrane", "stem": "The fluid mosaic model emphasizes that membrane proteins:", "options": ["Remain embedded in or associated with a dynamic lipid bilayer", "Form only rigid external coats", "Are absent in eukaryotic membranes", "Are made only of carbohydrates"], "answer": 1, "explanation": "Singer and Nicolson’s model describes a dynamic phospholipid bilayer with proteins embedded or associated."}, {"id": 31, "type": "Assertion & Reason", "topic": "Cell Biology", "stem": "Assertion (A): Lysosomes are called suicidal bags of the cell.\nReason (R): Lysosomes contain acid hydrolases that can digest damaged organelles and cellular macromolecules.", "options": ["A is false but R is true", "A is true but R is false", "A is true, R is true and R is the correct explanation of A", "A is true, R is true, but R is not the correct explanation of A"], "answer": 3, "explanation": "Lysosomes contain hydrolytic enzymes capable of autophagy and intracellular digestion."}, {"id": 32, "type": "MCQ", "topic": "Mitochondria", "stem": "Mitochondria are called semi-autonomous organelles because they:", "options": ["Lack membranes", "Contain their own DNA, RNA and ribosomes", "Are produced only by Golgi apparatus", "Lack any genetic material"], "answer": 2, "explanation": "Mitochondria contain circular DNA and ribosomes and synthesize some of their own proteins."}, {"id": 33, "type": "MCQ", "topic": "Chromatin", "stem": "Transcriptionally active chromatin is generally:", "options": ["Euchromatin, lightly stained and loosely packed", "Heterochromatin, densely stained and inactive", "Only centromeric DNA", "Always absent during interphase"], "answer": 1, "explanation": "Euchromatin is loosely packed and transcriptionally more active than heterochromatin."}, {"id": 34, "type": "MCQ", "topic": "Chromosomes", "stem": "In a submetacentric chromosome, the shorter and longer arms are conventionally called:", "options": ["m and n arms", "p and q arms", "s and l arms", "alpha and beta arms"], "answer": 2, "explanation": "The short arm is p and the long arm is q."}, {"id": 35, "type": "Matching", "topic": "Genetics", "stem": "Match the genetic term with its correct meaning.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Pleiotropy</td><td>I. Genes on same chromosome</td></tr><tr><td>B. Epistasis</td><td>II. One gene affects many traits</td></tr><tr><td>C. Linkage</td><td>III. Interaction where one gene masks another</td></tr><tr><td>D. Codominance</td><td>IV. Both alleles express in heterozygote</td></tr></table><br>Choose the correct match.", "options": ["A-I, B-II, C-III, D-IV", "A-II, B-III, C-I, D-IV", "A-II, B-I, C-IV, D-III", "A-IV, B-III, C-II, D-I"], "answer": 2, "explanation": "Pleiotropy is one gene affecting multiple traits; epistasis is masking interaction; linkage is same-chromosome association; codominance shows both alleles."}, {"id": 36, "type": "MCQ", "topic": "Genetics", "stem": "A dihybrid test cross involving independently assorting genes typically gives the ratio:", "options": ["3:1", "9:3:3:1", "1:2:1", "1:1:1:1"], "answer": 4, "explanation": "A heterozygote for two independently assorting genes crossed with double recessive gives four equal classes."}, {"id": 37, "type": "MCQ", "topic": "Genetics", "stem": "A 9:3:4 phenotypic ratio most commonly indicates:", "options": ["Recessive epistasis", "Incomplete dominance", "Codominance", "Maternal inheritance"], "answer": 1, "explanation": "Recessive epistasis commonly modifies the dihybrid ratio to 9:3:4."}, {"id": 38, "type": "MCQ", "topic": "Genetic Mapping", "stem": "One centimorgan represents approximately:", "options": ["50% recombination frequency", "1% recombination frequency", "One base pair distance", "One chromosome length"], "answer": 2, "explanation": "A map distance of 1 cM corresponds to 1% recombination frequency."}, {"id": 39, "type": "Statement", "topic": "Genetics", "stem": "Study the following statements about extranuclear inheritance.\nI. It may involve mitochondrial genes.\nII. It often shows maternal transmission.\nIII. It always follows Mendel’s law of independent assortment.\nIV. It can influence traits even when nuclear genotype is unchanged.\nIdentify the correct statements.", "options": ["I and III only", "II and III only", "I, II and IV only", "I, II, III and IV"], "answer": 3, "explanation": "Mitochondrial inheritance is often maternal and does not necessarily follow Mendelian nuclear ratios."}, {"id": 40, "type": "MCQ", "topic": "Sex Determination", "stem": "The XX-XO mechanism of sex determination is classically seen in:", "options": ["Drosophila", "Grasshopper", "Humans", "Birds"], "answer": 2, "explanation": "Grasshopper shows XX female and XO male condition."}, {"id": 41, "type": "Assertion & Reason", "topic": "Genetics", "stem": "Assertion (A): Closely linked genes show lower recombination frequency.\nReason (R): Crossing over between two genes becomes less probable when they are physically closer on the same chromosome.", "options": ["A is true, R is true and R is the correct explanation of A", "A is true but R is false", "A is false but R is true", "A is true, R is true, but R is not the correct explanation of A"], "answer": 1, "explanation": "Physical closeness reduces the chance of a crossover occurring between two loci."}, {"id": 42, "type": "MCQ", "topic": "Hardy-Weinberg", "stem": "In a Hardy-Weinberg population, if the recessive phenotype frequency is 0.09, the heterozygote frequency is:", "options": ["0.09", "0.18", "0.49", "0.42"], "answer": 4, "explanation": "q² = 0.09, so q = 0.3 and p = 0.7. Heterozygote frequency = 2pq = 0.42."}, {"id": 43, "type": "MCQ", "topic": "Evolution", "stem": "Stabilizing selection is best represented when:", "options": ["Only one extreme phenotype survives", "Both extremes are favoured over intermediates", "All phenotypes are equally eliminated", "Intermediate phenotypes are favoured over extremes"], "answer": 4, "explanation": "Stabilizing selection favours average phenotypes and removes extremes."}, {"id": 44, "type": "Matching", "topic": "Evolution", "stem": "Match the evolutionary concept with its example or meaning.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Adaptive radiation</td><td>I. Founder effect</td></tr><tr><td>B. Genetic drift</td><td>II. Darwin’s finches</td></tr><tr><td>C. Allopatric speciation</td><td>III. Geographic isolation</td></tr><tr><td>D. Directional selection</td><td>IV. Shift toward one extreme</td></tr></table><br>Choose the correct match.", "options": ["A-I, B-II, C-IV, D-III", "A-II, B-I, C-III, D-IV", "A-II, B-IV, C-III, D-I", "A-III, B-I, C-II, D-IV"], "answer": 2, "explanation": "Darwin’s finches show adaptive radiation; genetic drift may include founder effect; allopatry involves geographic isolation; directional selection favours one extreme."}, {"id": 45, "type": "MCQ", "topic": "Evolution", "stem": "The biological species concept gives central importance to:", "options": ["Reproductive isolation", "External similarity alone", "Number of chromosomes only", "Geographical range only"], "answer": 1, "explanation": "Species are defined by actual or potential interbreeding and reproductive isolation from other such groups."}, {"id": 46, "type": "Statement", "topic": "Embryology", "stem": "Study the following statements about gametogenesis.\nI. Spermatogenesis produces four functional sperm from one primary spermatocyte.\nII. Oogenesis produces one large ovum and polar bodies.\nIII. Spermiogenesis is transformation of spermatids into spermatozoa.\nIV. Spermiation means release of spermatozoa from Sertoli cells.\nIdentify the correct statements.", "options": ["I and III only", "I, II, III and IV", "II and IV only", "I, II and III only"], "answer": 2, "explanation": "All four statements correctly describe male and female gametogenesis."}, {"id": 47, "type": "MCQ", "topic": "Embryology", "stem": "The dorsal lip of the blastopore in amphibian gastrulation is famous as an organizer because it:", "options": ["Forms only extra-embryonic membranes", "Becomes the placenta", "Induces axial patterning and coordinates gastrulation movements", "Prevents mesoderm formation"], "answer": 3, "explanation": "The dorsal lip acts as Spemann’s organizer, initiating body-axis formation and coordinated morphogenetic movement."}, {"id": 48, "type": "MCQ", "topic": "Embryology", "stem": "Which germ layer primarily gives rise to muscles, notochord and blood-forming tissues?", "options": ["Ectoderm", "Endoderm", "Trophoblast", "Mesoderm"], "answer": 4, "explanation": "Mesoderm gives rise to muscles, notochord, connective tissues, blood and many internal organs."}, {"id": 49, "type": "MCQ", "topic": "Foetal Membranes", "stem": "In chick development, the allantois is mainly associated with:", "options": ["Protection in amniotic fluid", "Waste storage and respiratory exchange", "Formation of neural tube", "Formation of lens"], "answer": 2, "explanation": "Allantois stores nitrogenous waste and assists in gas exchange in chick embryos."}, {"id": 50, "type": "MCQ", "topic": "Placenta", "stem": "The mammalian placenta is correctly understood as:", "options": ["A larval respiratory organ", "A temporary exchange and endocrine organ between mother and foetus", "A permanent maternal kidney", "A structure derived only from yolk"], "answer": 2, "explanation": "Placenta mediates exchange of gases, nutrients, wastes and also secretes hormones."}, {"id": 51, "type": "MCQ", "topic": "Digestion", "stem": "Pepsinogen is converted into active pepsin mainly by:", "options": ["Bile salts in duodenum", "Trypsin in pancreas", "Hydrochloric acid in stomach", "Secretin in intestine"], "answer": 3, "explanation": "HCl provides acidic pH and converts pepsinogen into pepsin."}, {"id": 52, "type": "MCQ", "topic": "Respiration", "stem": "The expiratory capacity of a person is calculated as:", "options": ["Tidal volume + inspiratory reserve volume", "Inspiratory reserve volume + residual volume", "Tidal volume + expiratory reserve volume", "Residual volume + expiratory reserve volume"], "answer": 3, "explanation": "Expiratory capacity is the volume of air that can be expired after a normal inspiration: TV + ERV."}, {"id": 53, "type": "MCQ", "topic": "Circulation", "stem": "If stroke volume is 70 mL and heart rate is 72 beats per minute, the cardiac output is approximately:", "options": ["2.4 L/min", "7.2 L/min", "3.5 L/min", "5.0 L/min"], "answer": 4, "explanation": "Cardiac output = stroke volume × heart rate = 70 × 72 = 5040 mL/min ≈ 5.0 L/min."}, {"id": 54, "type": "Statement", "topic": "Excretion", "stem": "Study the following statements about urine concentration.\nI. The loop of Henle contributes to countercurrent multiplication.\nII. Vasa recta help preserve medullary osmotic gradient.\nIII. ADH increases water permeability of collecting duct.\nIV. Low ADH favours highly concentrated urine.\nIdentify the correct statements.", "options": ["I, II and III only", "I, II and IV only", "II and IV only", "I, II, III and IV"], "answer": 1, "explanation": "Low ADH causes dilute urine. Concentrated urine requires ADH and medullary gradient."}, {"id": 55, "type": "MCQ", "topic": "Neurophysiology", "stem": "Saltatory conduction occurs because action potentials are regenerated mainly at:", "options": ["Synaptic vesicles", "Nodes of Ranvier", "Myelin internodes", "Nissl bodies"], "answer": 2, "explanation": "In myelinated axons, ion exchange is concentrated at nodes of Ranvier."}, {"id": 56, "type": "Assertion & Reason", "topic": "Neurophysiology", "stem": "Assertion (A): Saltatory conduction is faster and more energy-efficient than continuous conduction.\nReason (R): Depolarization occurs at every point of the myelinated internode.", "options": ["A is true, R is true and R is the correct explanation of A", "A is false but R is true", "A is true but R is false", "A is true, R is true, but R is not the correct explanation of A"], "answer": 3, "explanation": "Saltatory conduction is fast because depolarization occurs mainly at nodes, not at every point of the internode."}, {"id": 57, "type": "MCQ", "topic": "Muscle Physiology", "stem": "In skeletal muscle contraction, calcium primarily initiates contraction by binding to:", "options": ["Myosin tail", "Actin active site directly", "ATP synthase", "Troponin"], "answer": 4, "explanation": "Calcium binds troponin, shifting tropomyosin and exposing actin binding sites."}, {"id": 58, "type": "MCQ", "topic": "Endocrinology", "stem": "The hormones synthesized in hypothalamus but released from posterior pituitary are:", "options": ["ADH and oxytocin", "TSH and ACTH", "FSH and LH", "Insulin and glucagon"], "answer": 1, "explanation": "ADH and oxytocin are synthesized in hypothalamic neurons and released through posterior pituitary."}, {"id": 59, "type": "MCQ", "topic": "Endocrinology", "stem": "Parathyroid hormone increases blood calcium mainly by:", "options": ["Stimulating calcium deposition only", "Blocking intestinal calcium absorption", "Converting glucose into glycogen", "Increasing bone resorption, renal calcium reabsorption and vitamin D activation"], "answer": 4, "explanation": "PTH raises blood calcium through bone, kidney and vitamin D-mediated intestinal effects."}, {"id": 60, "type": "MCQ", "topic": "Physiology", "stem": "The insulin-dependent glucose transporter in skeletal muscle and adipose tissue is:", "options": ["GLUT IV", "GLUT I", "GLUT II", "SGLT"], "answer": 1, "explanation": "GLUT IV is insulin-responsive and mediates glucose uptake in muscle and adipose tissue."}, {"id": 61, "type": "MCQ", "topic": "Ecology", "stem": "In a pond ecosystem, zooplankton usually function as:", "options": ["Decomposers only", "Producers", "Top carnivores", "Primary consumers"], "answer": 4, "explanation": "Zooplankton feed on phytoplankton and function as primary consumers."}, {"id": 62, "type": "Statement", "topic": "Ecology", "stem": "Study the following statements about energy flow.\nI. Energy flow in ecosystems is unidirectional.\nII. Energy transfer between trophic levels is inefficient.\nIII. The pyramid of energy is always upright.\nIV. Energy is recycled in ecosystems like nutrients.\nIdentify the correct statements.", "options": ["I, II and III only", "I and IV only", "II and IV only", "I, II, III and IV"], "answer": 1, "explanation": "Energy flows one way and is lost as heat; it is not recycled like nutrients. Energy pyramid is always upright."}, {"id": 63, "type": "MCQ", "topic": "Biogeochemical Cycles", "stem": "During nitrification, ammonia is converted into nitrite and nitrate mainly by:", "options": ["Rhizobium and Nostoc", "Pseudomonas only", "Nitrosomonas and Nitrobacter", "Methanogens only"], "answer": 3, "explanation": "Nitrosomonas oxidizes ammonia to nitrite; Nitrobacter oxidizes nitrite to nitrate."}, {"id": 64, "type": "Assertion & Reason", "topic": "Ecology", "stem": "Assertion (A): A niche is broader than a habitat.\nReason (R): Habitat is the address of an organism, while niche includes its functional role, resource use and interactions.", "options": ["A is true but R is false", "A is false but R is true", "A is true, R is true, but R is not the correct explanation of A", "A is true, R is true and R is the correct explanation of A"], "answer": 4, "explanation": "Habitat tells where an organism lives; niche includes how it lives and interacts."}, {"id": 65, "type": "MCQ", "topic": "Community Interaction", "stem": "The fig tree and fig wasp relationship is best treated as:", "options": ["Commensalism", "Amensalism", "Obligate mutualism", "Parasitism only"], "answer": 3, "explanation": "Fig wasp completes its life cycle in figs and pollinates the fig plant, benefiting both partners."}, {"id": 66, "type": "Matching", "topic": "Ecology", "stem": "Match the ecological term with its meaning.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Mutualism</td><td>I. Gradual community change</td></tr><tr><td>B. Predation</td><td>II. Both species benefit</td></tr><tr><td>C. Competition</td><td>III. One kills and eats another</td></tr><tr><td>D. Succession</td><td>IV. Shared resource demand harms both</td></tr></table><br>Choose the correct match.", "options": ["A-II, B-III, C-IV, D-I", "A-II, B-IV, C-III, D-I", "A-I, B-III, C-IV, D-II", "A-IV, B-II, C-III, D-I"], "answer": 1, "explanation": "Mutualism benefits both; predation involves one organism eating another; competition harms both through shared resource use; succession is gradual community change."}, {"id": 67, "type": "MCQ", "topic": "Animal Behaviour", "stem": "A fixed action pattern is best described as:", "options": ["A learned response requiring repeated reward", "An innate stereotyped sequence triggered by a sign stimulus", "A random response without stimulus", "A conscious reasoning-based response"], "answer": 2, "explanation": "Fixed action patterns are innate, stereotyped behaviours released by specific stimuli."}, {"id": 68, "type": "MCQ", "topic": "Animal Behaviour", "stem": "Classical conditioning was experimentally demonstrated using salivation responses in dogs by:", "options": ["Skinner", "Pavlov", "Lorenz", "Tinbergen"], "answer": 2, "explanation": "Pavlov’s dog experiments established classical conditioning."}, {"id": 69, "type": "MCQ", "topic": "Animal Behaviour", "stem": "Circadian rhythm differs from a simple environmental response because it:", "options": ["Has an endogenous biological basis but can be entrained by external cues", "Is always less than one hour", "Occurs only in bacteria", "Cannot be affected by light"], "answer": 1, "explanation": "Circadian rhythms are internally generated near-24-hour rhythms that can be reset by cues like light."}, {"id": 70, "type": "MCQ", "topic": "Ecology", "stem": "In a hydrarch succession, the earliest biological stage in open water is typically dominated by:", "options": ["Forest trees", "Phytoplankton", "Desert shrubs", "Lichens on bare rock"], "answer": 2, "explanation": "Hydrarch succession begins in water, commonly with phytoplankton as pioneer producers."}, {"id": 71, "type": "Statement", "topic": "Recombinant DNA Technology", "stem": "Study the following statements about Type II restriction enzymes.\nI. They recognize specific DNA sequences.\nII. They usually cut within or near recognition sites.\nIII. Many recognize palindromic sequences.\nIV. They require no DNA substrate.\nIdentify the correct statements.", "options": ["I and IV only", "I, II and III only", "II and IV only", "I, II, III and IV"], "answer": 2, "explanation": "Type II restriction enzymes require DNA substrate and cut at specific recognition sequences, often palindromic."}, {"id": 72, "type": "Assertion & Reason", "topic": "Recombinant DNA Technology", "stem": "Assertion (A): Blue-white screening can identify recombinant bacterial colonies.\nReason (R): Insertional inactivation of lacZ alpha prevents beta-galactosidase activity, producing white colonies on chromogenic medium.", "options": ["A is true but R is false", "A is false but R is true", "A is true, R is true and R is the correct explanation of A", "A is true, R is true, but R is not the correct explanation of A"], "answer": 3, "explanation": "Insertion within lacZ alpha disrupts enzyme activity, so recombinant colonies appear white."}, {"id": 73, "type": "MCQ", "topic": "Vectors", "stem": "The advantage of pUC vectors over older plasmids like pBR322 is mainly due to:", "options": ["Absence of origin of replication", "Inability to accept foreign DNA", "Lack of selectable markers", "High copy number and blue-white selection facility"], "answer": 4, "explanation": "pUC vectors have high copy number and lacZ-based blue-white screening."}, {"id": 74, "type": "Matching", "topic": "Biotechnology", "stem": "Match the technique with its target or use.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Southern blot</td><td>I. RNA detection</td></tr><tr><td>B. Northern blot</td><td>II. DNA detection</td></tr><tr><td>C. Western blot</td><td>III. Protein detection</td></tr><tr><td>D. PCR</td><td>IV. DNA amplification</td></tr></table><br>Choose the correct match.", "options": ["A-I, B-II, C-III, D-IV", "A-II, B-III, C-I, D-IV", "A-IV, B-I, C-III, D-II", "A-II, B-I, C-III, D-IV"], "answer": 4, "explanation": "Southern detects DNA, Northern detects RNA, Western detects protein and PCR amplifies DNA."}, {"id": 75, "type": "MCQ", "topic": "Gene Delivery", "stem": "Electroporation introduces DNA into cells by:", "options": ["Using antibodies to digest the membrane", "Injecting DNA into only the male pronucleus", "Packaging DNA only into bacteriophage capsids", "Creating temporary membrane pores with electric pulses"], "answer": 4, "explanation": "Electric pulses transiently permeabilize the membrane, allowing DNA entry."}, {"id": 76, "type": "Statement", "topic": "PCR and Sequencing", "stem": "Study the following statements about PCR and Sanger sequencing.\nI. PCR involves denaturation, annealing and extension.\nII. Taq polymerase is thermostable.\nIII. Sanger sequencing uses dideoxynucleotides for chain termination.\nIV. PCR requires ribosomes for amplification.\nIdentify the correct statements.", "options": ["I and IV only", "I, II and III only", "II and IV only", "I, II, III and IV"], "answer": 2, "explanation": "PCR does not require ribosomes. It uses DNA template, primers, nucleotides and thermostable DNA polymerase."}, {"id": 77, "type": "MCQ", "topic": "Animal Cell Technology", "stem": "A hybridoma used for monoclonal antibody production is formed by fusion of:", "options": ["T cell and macrophage", "Fibroblast and erythrocyte", "B lymphocyte and myeloma cell", "Neutrophil and platelet"], "answer": 3, "explanation": "Hybridomas combine antibody specificity of B cells and immortality of myeloma cells."}, {"id": 78, "type": "MCQ", "topic": "Cell Culture", "stem": "A continuous cell line differs from primary culture because it:", "options": ["Is freshly isolated and short-lived only", "Cannot divide in vitro", "Contains no animal cells", "Has acquired ability for indefinite or long-term propagation"], "answer": 4, "explanation": "Continuous cell lines can proliferate for extended or indefinite passages."}, {"id": 79, "type": "MCQ", "topic": "Stem Cells", "stem": "Totipotent stem cells are unique because they can give rise to:", "options": ["Only blood cells", "Only neurons", "Embryonic and extra-embryonic tissues sufficient for a whole organism", "Only germ cells"], "answer": 3, "explanation": "Totipotent cells can generate both embryo proper and supporting extra-embryonic tissues."}, {"id": 80, "type": "MCQ", "topic": "Assisted Reproduction", "stem": "Embryo transfer in animal breeding is mainly used to:", "options": ["Rapidly multiply superior genetic stock", "Stop ovulation permanently", "Replace vaccination", "Produce monoclonal antibodies"], "answer": 1, "explanation": "Embryo transfer allows embryos from superior females to be carried by recipient mothers."}, {"id": 81, "type": "MCQ", "topic": "Fermentation", "stem": "Fed-batch fermentation differs from simple batch culture because:", "options": ["Cells are grown only on dry solid waste", "Nutrients are added during the run without complete harvest", "It excludes microbial growth", "Product is collected before inoculation"], "answer": 2, "explanation": "Fed-batch adds nutrients over time while culture continues, improving yield and control."}, {"id": 82, "type": "Matching", "topic": "Fermentation", "stem": "Match the downstream process with its main purpose.<br><br><table class='match-table'><tr><th>Column A</th><th>Column B</th></tr><tr><td>A. Filtration</td><td>I. Separation by particle size or membrane</td></tr><tr><td>B. Centrifugation</td><td>II. Separation by density</td></tr><tr><td>C. Chromatography</td><td>III. Separation by molecular interaction</td></tr><tr><td>D. Lyophilization</td><td>IV. Freeze drying</td></tr></table><br>Choose the correct match.", "options": ["A-II, B-I, C-III, D-IV", "A-I, B-II, C-III, D-IV", "A-I, B-III, C-II, D-IV", "A-IV, B-II, C-III, D-I"], "answer": 2, "explanation": "Filtration separates through barriers, centrifugation by density, chromatography by interactions and lyophilization by freeze drying."}, {"id": 83, "type": "MCQ", "topic": "Animal Husbandry", "stem": "Brooding in poultry management is primarily meant to:", "options": ["Induce rumination in calves", "Increase pearl formation", "Sterilize hatching eggs by radiation", "Provide warmth, protection and early care to chicks"], "answer": 4, "explanation": "Brooding provides controlled warmth and care during early chick life."}, {"id": 84, "type": "MCQ", "topic": "Poultry Farming", "stem": "Broilers are primarily reared for:", "options": ["Meat production", "Egg production", "Wool production", "Draught power"], "answer": 1, "explanation": "Broilers are meat-type poultry birds."}, {"id": 85, "type": "Assertion & Reason", "topic": "Poultry Health", "stem": "Assertion (A): Vaccination schedules are critical in poultry farming.\nReason (R): Viral diseases such as Newcastle disease can cause severe flock-level losses.", "options": ["A is true, R is true, but R is not the correct explanation of A", "A is true but R is false", "A is false but R is true", "A is true, R is true and R is the correct explanation of A"], "answer": 4, "explanation": "Newcastle and other infectious diseases can spread rapidly; vaccination reduces mortality and production losses."}, {"id": 86, "type": "MCQ", "topic": "Dairy Science", "stem": "Inbreeding in dairy animals must be managed carefully because excessive inbreeding can:", "options": ["Cause inbreeding depression by exposing harmful recessives", "Increase heterozygosity indefinitely", "Convert cattle into buffaloes", "Prevent all genetic uniformity"], "answer": 1, "explanation": "Excessive inbreeding increases homozygosity and may expose deleterious recessive alleles."}, {"id": 87, "type": "MCQ", "topic": "Dairy Science", "stem": "Crossbreeding is practiced mainly to exploit:", "options": ["Loss of all breed characters", "Sterility in all progeny", "Heterosis and combination of desirable traits", "Absence of milk production"], "answer": 3, "explanation": "Crossbreeding combines desirable traits and may produce hybrid vigour."}, {"id": 88, "type": "MCQ", "topic": "Dairy Management", "stem": "Loose housing is often preferred in dairy farms because it:", "options": ["Allows free movement and easier group management", "Prevents all diseases without sanitation", "Requires no feeding plan", "Eliminates need for records"], "answer": 1, "explanation": "Loose housing allows animals more movement and can simplify group management when sanitation is maintained."}, {"id": 89, "type": "Statement", "topic": "Animal Husbandry", "stem": "Study the following statements about dairy calf management.\nI. Colostrum provides passive immunity.\nII. Deworming helps control internal parasites.\nIII. Dehorning may reduce injury during handling.\nIV. Records are unnecessary in scientific dairy farming.\nIdentify the correct statements.", "options": ["I, II and III only", "I and IV only", "II and IV only", "I, II, III and IV"], "answer": 1, "explanation": "Records are important for breeding, health, production and management decisions."}, {"id": 90, "type": "MCQ", "topic": "Animal Husbandry", "stem": "Hatching eggs are preferably selected based on:", "options": ["Only shell colour, ignoring cracks", "Exposure to high sunlight for several days", "Presence of visible fungal growth", "Cleanliness, normal shape, shell integrity and suitable size"], "answer": 4, "explanation": "Good hatching eggs should be clean, normally shaped, intact and of appropriate size."}, {"id": 91, "type": "MCQ", "topic": "Immunology", "stem": "Innate immunity differs from adaptive immunity because it is:", "options": ["Restricted only to antibodies", "Absent at birth", "Mediated only by plasma cells", "Non-specific, immediate and lacks highly specific memory"], "answer": 4, "explanation": "Innate immunity is present from birth, rapid and non-specific compared with adaptive immunity."}, {"id": 92, "type": "MCQ", "topic": "Immunology", "stem": "T lymphocytes mature mainly in the:", "options": ["Bone marrow", "Spleen red pulp", "Lymph node medulla", "Thymus"], "answer": 4, "explanation": "T cells mature in the thymus; B cells mature in bone marrow in humans."}, {"id": 93, "type": "MCQ", "topic": "Immunology", "stem": "An epitope is best defined as:", "options": ["An antigenic determinant recognized by antibody or T-cell receptor", "A complete antibody molecule", "A type of vaccine adjuvant only", "The constant region of IgG"], "answer": 1, "explanation": "Epitope is the specific part of antigen recognized by immune receptors."}, {"id": 94, "type": "MCQ", "topic": "Immunology", "stem": "A hapten becomes immunogenic only when it:", "options": ["Is converted into a chromosome", "Loses all chemical groups", "Becomes a ribosome", "Binds to a suitable carrier molecule"], "answer": 4, "explanation": "Haptens are small molecules that become immunogenic after coupling with carrier proteins."}, {"id": 95, "type": "MCQ", "topic": "Immunology", "stem": "Endogenous antigen presentation usually involves:", "options": ["MHC class II and CD4 cells", "Secreted antibodies only", "MHC class I and CD8 cytotoxic T cells", "Complement proteins only"], "answer": 3, "explanation": "Endogenous antigens, such as viral proteins made inside cells, are presented via MHC I to CD8 T cells."}, {"id": 96, "type": "MCQ", "topic": "Immunology", "stem": "Exogenous antigens taken up by antigen-presenting cells are commonly presented through:", "options": ["MHC class I to erythrocytes", "Haemoglobin to platelets", "MHC class II to CD4 helper T cells", "DNA ligase to macrophages"], "answer": 3, "explanation": "Exogenous antigens are processed in endosomal compartments and presented by MHC II to CD4 T cells."}, {"id": 97, "type": "MCQ", "topic": "Immunology", "stem": "The antibody class most associated with mucosal secretions and colostrum is:", "options": ["IgD", "IgE", "IgM only", "IgA"], "answer": 4, "explanation": "Secretory IgA is abundant in mucosal secretions and colostrum."}, {"id": 98, "type": "MCQ", "topic": "Immunology", "stem": "Type I hypersensitivity is mediated mainly by:", "options": ["IgG against cell surface antigen", "Immune complexes only", "IgE bound to mast cells and basophils", "Delayed T-cell response only"], "answer": 3, "explanation": "Immediate hypersensitivity involves IgE-mediated mast cell degranulation."}, {"id": 99, "type": "Assertion & Reason", "topic": "Immunology", "stem": "Assertion (A): Adjuvants are included in some vaccines to enhance immunogenicity.\nReason (R): Adjuvants improve antigen presentation and stimulate innate immune signals.", "options": ["A is true, R is true and R is the correct explanation of A", "A is true but R is false", "A is false but R is true", "A is true, R is true, but R is not the correct explanation of A"], "answer": 1, "explanation": "Adjuvants enhance immune responses by improving antigen persistence, presentation and innate stimulation."}, {"id": 100, "type": "MCQ", "topic": "Immunology", "stem": "The major biological purpose of vaccination is to:", "options": ["Destroy all pathogens before entry into the body", "Generate specific immune memory without causing severe disease", "Suppress all lymphocytes permanently", "Replace innate immunity with antibiotics"], "answer": 2, "explanation": "Vaccines safely expose the immune system to antigen so that memory responses are ready during future exposure."}];
+let current = 0;
+let answers = Array(QUESTIONS.length).fill(null);
+let marked = Array(QUESTIONS.length).fill(false);
+let visited = Array(QUESTIONS.length).fill(false);
+let examStarted = false;
+let submitted = false;
+let durationSeconds = 90 * 60;
+let remaining = durationSeconds;
+let timerHandle = null;
+let startedAt = null;
+
+function startExam() {
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('examLayout').classList.remove('hidden');
+  examStarted = true;
+  startedAt = Date.now();
+  buildPalette();
+  renderQuestion(0);
+  updateTimer();
+  timerHandle = setInterval(() => {
+    remaining--;
+    updateTimer();
+    if (remaining <= 0) {
+      clearInterval(timerHandle);
+      submitTest(true);
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const m = Math.floor(Math.max(remaining,0) / 60);
+  const s = Math.max(remaining,0) % 60;
+  document.getElementById('timer').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function buildPalette() {
+  const p = document.getElementById('palette');
+  p.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const b = document.createElement('button');
+    b.className = 'pbtn';
+    b.textContent = i + 1;
+    b.onclick = () => renderQuestion(i);
+    p.appendChild(b);
+  });
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.pbtn');
+  buttons.forEach((b, i) => {
+    b.className = 'pbtn';
+    if (answers[i] !== null) b.classList.add('answered');
+    if (marked[i]) b.classList.add('review');
+    if (i === current) b.classList.add('current');
+  });
+  const attempted = answers.filter(a => a !== null).length;
+  const review = marked.filter(Boolean).length;
+  document.getElementById('liveSummary').innerHTML =
+    '<b>Attempted:</b> ' + attempted + '<br/>' +
+    '<b>Unattempted:</b> ' + (QUESTIONS.length - attempted) + '<br/>' +
+    '<b>Marked for Review:</b> ' + review + '<br/>' +
+    '<b>Current:</b> Question ' + (current + 1);
+}
+
+function renderQuestion(index) {
+  current = index;
+  visited[current] = true;
+  const q = QUESTIONS[current];
+  document.getElementById('qno').textContent = 'Question ' + q.id + ' of ' + QUESTIONS.length;
+  document.getElementById('qtype').textContent = q.type;
+  document.getElementById('topic').textContent = q.topic;
+  document.getElementById('stem').innerHTML = q.stem;
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const div = document.createElement('div');
+    div.className = 'option' + (answers[current] === idx + 1 ? ' selected' : '');
+    div.onclick = () => {
+      answers[current] = idx + 1;
+      marked[current] = false;
+      renderQuestion(current);
+    };
+    const n = document.createElement('span');
+    n.className = 'num';
+    n.textContent = idx + 1;
+    const t = document.createElement('span');
+    t.textContent = opt;
+    div.appendChild(n);
+    div.appendChild(t);
+    opts.appendChild(div);
+  });
+  updatePalette();
+}
+
+function saveNext() {
+  if (current < QUESTIONS.length - 1) renderQuestion(current + 1);
+}
+
+function prevQuestion() {
+  if (current > 0) renderQuestion(current - 1);
+}
+
+function markReview() {
+  marked[current] = true;
+  if (current < QUESTIONS.length - 1) renderQuestion(current + 1);
+  else updatePalette();
+}
+
+function clearResponse() {
+  answers[current] = null;
+  marked[current] = false;
+  renderQuestion(current);
+}
+
+function confirmSubmit() {
+  const attempted = answers.filter(a => a !== null).length;
+  if (confirm('You have attempted ' + attempted + ' out of ' + QUESTIONS.length + ' questions. Submit test now?')) {
+    submitTest(false);
+  }
+}
+
+function submitTest(auto=false) {
+  if (submitted) return;
+  submitted = true;
+  if (timerHandle) clearInterval(timerHandle);
+  const correct = QUESTIONS.reduce((sum, q, i) => sum + (answers[i] === q.answer ? 1 : 0), 0);
+  const attempted = answers.filter(a => a !== null).length;
+  const wrong = attempted - correct;
+  const unattempted = QUESTIONS.length - attempted;
+  const timeTaken = durationSeconds - remaining;
+  const tm = Math.floor(timeTaken/60);
+  const ts = timeTaken%60;
+  document.getElementById('examLayout').classList.add('hidden');
+  document.getElementById('resultView').style.display = 'block';
+  document.getElementById('scoreStat').textContent = correct;
+  document.getElementById('correctStat').textContent = correct;
+  document.getElementById('wrongStat').textContent = wrong;
+  document.getElementById('unattemptedStat').textContent = unattempted;
+  document.getElementById('resultNote').innerHTML =
+    (auto ? '<b>Time is over. Test auto-submitted.</b><br/>' : '<b>Test submitted successfully.</b><br/>') +
+    'Time taken: ' + tm + ' min ' + ts + ' sec. ' +
+    'Review each question below. Correct responses are highlighted in light green, and wrong responses are highlighted in red.';
+  renderReview('all');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function renderReview(filter='all', btn=null) {
+  if (btn) {
+    document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const c = document.getElementById('reviewContainer');
+  c.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const selected = answers[i];
+    let status = selected === null ? 'unattempted' : (selected === q.answer ? 'correct' : 'wrong');
+    if (filter !== 'all' && filter !== status) return;
+
+    const card = document.createElement('div');
+    card.className = 'review-card ' + status;
+
+    const top = document.createElement('div');
+    top.innerHTML = '<b>Q' + q.id + '</b> <span class="badge">' + q.type + '</span> <span class="topic">' + q.topic + '</span> <b style="float:right;">' + status.toUpperCase() + '</b>';
+    card.appendChild(top);
+
+    const stem = document.createElement('div');
+    stem.className = 'review-stem';
+    stem.innerHTML = q.stem;
+    card.appendChild(stem);
+
+    q.options.forEach((opt, idx) => {
+      const opNo = idx + 1;
+      const od = document.createElement('div');
+      od.className = 'review-option';
+      if (opNo === q.answer) od.classList.add('correct-answer');
+      if (selected !== null && selected === opNo && selected !== q.answer) od.classList.add('wrong-answer');
+      od.textContent = opNo + '. ' + opt + (opNo === q.answer ? '  ✓ Correct answer' : '') + (selected === opNo && selected !== q.answer ? '  ✗ Your answer' : '');
+      card.appendChild(od);
+    });
+
+    const exp = document.createElement('div');
+    exp.className = 'explanation';
+    exp.innerHTML = '<b>Explanation:</b> ' + q.explanation;
+    card.appendChild(exp);
+    c.appendChild(card);
+  });
+}
+</script>
+</body>
+</html>
